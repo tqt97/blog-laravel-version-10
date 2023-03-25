@@ -87,7 +87,8 @@ return [
     'auth' => [
         'guard' => env('FILAMENT_AUTH_GUARD', 'web'),
         'pages' => [
-            'login' => \Filament\Http\Livewire\Auth\Login::class,
+            'login' =>
+            \JeffGreco13\FilamentBreezy\Http\Livewire\Auth\Login::class,
         ],
     ],
 
@@ -237,7 +238,7 @@ return [
             'have_inline_labels' => false,
         ],
         'footer' => [
-            'should_show_logo' => true,
+            'should_show_logo' => false,
         ],
         'max_content_width' => 'full',
         'notifications' => [
