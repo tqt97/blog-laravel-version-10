@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Str::macro('readingMinutes', function ($subject, $wordsPerMinute = 200) {
+            return intval(ceil(Str::wordCount(strip_tags($subject)) / $wordsPerMinute));
+        });
     }
 }
