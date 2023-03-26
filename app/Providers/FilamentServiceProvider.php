@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Filament\Facades\Filament;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Field;
 use Filament\Navigation\NavigationGroup;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +23,15 @@ class FilamentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Field::macro("tooltip", function (string $tooltip) {
+            return $this->hintAction(
+                Action::make('help')
+                    ->icon('heroicon-o-question-mark-circle')
+                    ->extraAttributes(["class" => "text-gray-500"])
+                    ->label("")
+                    ->tooltip($tooltip)
+            );
+        });
         Filament::serving(function () {
             // Using Vite
             // Filament::registerTheme(
