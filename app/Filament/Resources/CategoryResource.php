@@ -73,6 +73,16 @@ class CategoryResource extends Resource
                         ->helperText('Default is null. It\'s root category.')
                         ->relationship('parent', 'name')
                         ->searchable()
+                        // ->default(
+                        //     Category::query()
+                        //         ->latest('created_at')
+                        //         ->pluck('category_id') ?
+                        //         Category::query()
+                        //         ->latest('created_at')
+                        //         ->pluck('category_id')
+                        //         ->first() :
+                        //         null
+                        // )
                         ->preload(),
                     Forms\Components\FileUpload::make('banner')
                         ->translateLabel()
