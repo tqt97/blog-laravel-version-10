@@ -31,7 +31,7 @@ class TagResource extends Resource
         return static::getModel()::count() > 10 ? 'warning' : 'primary';
     }
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
