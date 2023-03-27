@@ -3,10 +3,11 @@
 namespace App\Providers;
 
 use Filament\Facades\Filament;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Field;
-use Filament\Navigation\NavigationGroup;
 use Illuminate\Support\ServiceProvider;
+use Filament\Forms\Components\TextInput;
+use Filament\Navigation\NavigationGroup;
+use Filament\Forms\Components\Actions\Action;
 
 class FilamentServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,16 @@ class FilamentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Reveal on focus TextInputs
+        TextInput::macro('revealOnFocus', function () {
+            return $this
+                ->type('password')
+                ->extraInputAttributes([
+                    'x-on:focus' => "\$el.type = 'text'",
+                    'x-on:blur' => "\$el.type = 'password'",
+                ]);
+        });
+        // Add tooltip
         Field::macro("tooltip", function (string $tooltip) {
             return $this->hintAction(
                 Action::make('help')
