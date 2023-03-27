@@ -71,6 +71,7 @@ class UserResource extends Resource
                         ->translateLabel(),
                     Forms\Components\TextInput::make('password')
                         ->label('Password')
+                        ->revealOnFocus()
                         ->password()
                         ->maxLength(255)
                         ->confirmed()
