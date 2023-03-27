@@ -8,14 +8,18 @@ use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Str;
 
+
 class ListCategories extends ListRecords
 {
+    use ListRecords\Concerns\Translatable;
+
     protected static string $resource = CategoryResource::class;
 
     protected function getActions(): array
     {
         return [
             Actions\CreateAction::make(),
+            // Actions\LocaleSwitcher::make(),
         ];
     }
 

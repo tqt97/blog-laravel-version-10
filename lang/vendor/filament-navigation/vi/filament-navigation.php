@@ -4,24 +4,24 @@ return [
     'attributes' => [
         'external-link' => 'Liên kết bên ngoài',
         'url' => 'URL',
-        'target' => 'Mục tiêu',
+        'target' => 'Target',
         'name' => 'Tên',
-        'items' => 'Danh sách',
-        'handle' => 'Slug',
+        'items' => 'Items',
+        'handle' => 'Handle',
         'created_at' => 'Ngày tạo',
         'updated_at' => 'Ngày cập nhật',
 
     ],
 
     'select-options' => [
-        'same-tab' => 'Cùng 1 tab',
-        'new-tab' => 'Tab mới'
+        'same-tab' => 'Same tab',
+        'new-tab' => 'New tab'
     ],
 
     'items' => [
-        'empty' => 'Danh sách trống',
-        'add-item' => 'Thêm',
-        'add-child' => 'Thêm child',
+        'empty' => 'No items.',
+        'add-item' => 'Add item',
+        'add-child' => 'Add child',
         'move-up' => 'Move up',
         'move-down' => 'Move down',
         'indent' => 'Indent',
@@ -31,8 +31,8 @@ return [
 
     'items-modal' => [
         'title' => 'Item',
-        'label' => 'Nhãn',
-        'type' => 'Loại',
-        'btn' => 'Lưu',
+        'label' => 'Label',
+        'type' => 'Type',
+        'btn' => 'Save',
     ],
 ];

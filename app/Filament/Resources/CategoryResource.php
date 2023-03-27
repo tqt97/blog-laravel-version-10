@@ -2,21 +2,36 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Models\Category;
 use Closure;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Category;
 use Illuminate\Support\Str;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Concerns\Translatable;
+use App\Filament\Resources\CategoryResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CategoryResource extends Resource
 {
+    use Translatable;
+
+    public static function getTranslatableLocales(): array
+    {
+        return ['vi', 'en'];
+    }
+
+    protected static ?string $label = 'label';
+
+    protected static ?string $modelLabel = 'Category';
+    protected static ?string $navigationLabel = 'Danh mục bài viết';
+    protected static ?string $pluralModelLabel = 'Danh mục bài viết';
+
+
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
@@ -119,6 +134,7 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Name')
                     ->sortable()
                     ->searchable()
                     ->toggleable()
@@ -129,7 +145,11 @@ class CategoryResource extends Resource
                     ->searchable()
                     ->toggleable(),
                 Tables\Columns\IconColumn::make('active')
-                    ->sortable()->searchable()->toggleable()->boolean()
+                    ->label('Active')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable()
+                    ->boolean()
                     ->extraAttributes(['class' => 'flex justify-center'])
                     ->action(function ($record, $column) {
                         $name = $column->getName();
@@ -137,11 +157,11 @@ class CategoryResource extends Resource
                             $name => !$record->$name
                         ]);
                     }),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('created_at')->label('Created at')
                     ->sortable()->searchable()->toggleable()->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('updated_at')->label('Updated at')
                     ->sortable()->searchable()->toggleable()->dateTime(),
-                Tables\Columns\TextColumn::make('deleted_at')
+                Tables\Columns\TextColumn::make('deleted_at')->label('Deleted at')
                     ->sortable()->searchable()->toggleable()->dateTime(),
             ])
             ->filters([

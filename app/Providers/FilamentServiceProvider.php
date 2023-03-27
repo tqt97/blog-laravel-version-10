@@ -8,6 +8,9 @@ use Illuminate\Support\ServiceProvider;
 use Filament\Forms\Components\TextInput;
 use Filament\Navigation\NavigationGroup;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Placeholder;
+use Filament\Tables\Columns\Column;
+use Filament\Tables\Filters\BaseFilter;
 
 class FilamentServiceProvider extends ServiceProvider
 {
@@ -24,6 +27,8 @@ class FilamentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->autoTranslateLabels();
+
         // Reveal on focus TextInputs
         TextInput::macro('revealOnFocus', function () {
             return $this
@@ -84,5 +89,24 @@ class FilamentServiceProvider extends ServiceProvider
             //         ->collapsed(),
             // ]);
         });
+    }
+
+    private function autoTranslateLabels()
+    {
+        $this->translateLabels([
+            Field::class,
+            BaseFilter::class,
+            Placeholder::class,
+            Column::class,
+            // or even `BaseAction::class`,
+        ]);
+    }
+    private function translateLabels(array $components = [])
+    {
+        foreach ($components as $component) {
+            $component::configureUsing(function ($c): void {
+                $c->translateLabel();
+            });
+        }
     }
 }
