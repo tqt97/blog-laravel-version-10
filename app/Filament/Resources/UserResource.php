@@ -2,19 +2,21 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use App\Models\User;
+use Filament\Tables;
+use Illuminate\Support\Str;
+use Filament\Resources\Form;
+use Filament\Resources\Table;
+use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Pages\CreateRecord;
 use App\Filament\Resources\UserResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Filament\Resources\UserResource\RelationManagers\RolesRelationManager;
-use App\Models\User;
-use Filament\Forms;
-use Filament\Resources\Form;
-use Filament\Resources\Pages\CreateRecord;
-use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -51,7 +53,16 @@ class UserResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->autofocus()
-                        ->translateLabel(),
+                        ->translateLabel()
+                        ->hint(function ($component) {
+                            return new HtmlString('
+                                <div class="space-x-2">
+                                    <span wire:click="$set(\''.$component->getStatePath().'\', null)" class="font-medium h- px-2 py-0.5 rounded-xl bg-primary-500 text-white text-xs tracking-tight mt-[10px] cursor-pointer">
+                                        Clear
+                                    </span>
+                                </div>
+                            ');
+                        }),
                     Forms\Components\TextInput::make('email')
                         ->label('Email')
                         ->email()
@@ -71,6 +82,16 @@ class UserResource extends Resource
                         ->translateLabel(),
                     Forms\Components\TextInput::make('password')
                         ->label('Password')
+                        ->hint(function () {
+                            return new HtmlString('
+                                <div class="flex flex-wrap space-x-2">
+                                    <span wire:click="$set(\'data.password\', \'' . Str::random(8) . '\')" class="font-medium h- px-2 py-0.5 rounded-xl bg-primary-500 text-white text-xs tracking-tight mt-[10px] cursor-pointer">
+                                        Random password
+                                    </span>
+                                </div>
+                            ');
+                        })
+                        ->revealOnFocus()
                         ->password()
                         ->maxLength(255)
                         ->confirmed()

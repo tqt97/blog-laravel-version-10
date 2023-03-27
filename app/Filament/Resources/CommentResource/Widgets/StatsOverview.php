@@ -15,7 +15,7 @@ class StatsOverview extends BaseWidget
     {
         $comments = Comment::select(DB::raw('count(*) as total '))->first();
 
-        return [
+        return $comments->total == 0 ? [] :[
             Card::make(__('Total'), $comments->total)
                 ->description(__('Total comments'))
                 ->descriptionIcon('heroicon-s-trending-up')
