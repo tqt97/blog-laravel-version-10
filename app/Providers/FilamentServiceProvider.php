@@ -58,7 +58,10 @@ class FilamentServiceProvider extends ServiceProvider
                     ->orderBy(implode('_', [$table, $field]), $direction);
             });
         });
-
+        Filament::registerScripts([
+            'https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js',
+        ], shouldBeLoadedBeforeCoreScripts: true);
+        Filament::registerViteTheme('resources/css/filament.css');
         Filament::serving(function () {
             // Using Vite
             // Filament::registerTheme(
