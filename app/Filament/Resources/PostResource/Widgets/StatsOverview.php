@@ -19,7 +19,7 @@ class StatsOverview extends BaseWidget
             SUM(CASE WHEN active = 0 THEN 1 ELSE 0 END) as unpublish
         '))->first();
 
-        return [
+        return $posts->total == 0 ? [] : [
             Card::make(__('Total'), $posts->total)
                 ->description(__('Total posts'))
                 ->descriptionIcon('heroicon-s-trending-up')

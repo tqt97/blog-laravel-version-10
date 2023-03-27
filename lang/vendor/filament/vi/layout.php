@@ -39,5 +39,6 @@ return [
         ],
 
     ],
+    'Category' => 'Danh mục'
 
 ];

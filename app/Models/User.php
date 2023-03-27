@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasProfilePhoto;
 use Filament\Models\Contracts\FilamentUser;
+// use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,9 +14,9 @@ use JeffGreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable, HasRoles, SoftDeletes, HasProfilePhoto;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +28,8 @@ class User extends Authenticatable implements FilamentUser
         'email',
         'password',
         'is_admin',
-        'active'
+        'active',
+        'profile_photo_path'
     ];
 
     /**
@@ -48,8 +51,17 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
+    // protected $appends = [
+    //     'profile_photo_url',
+    // ];
+
     public function canAccessFilament(): bool
     {
         return $this->hasRole(['super_admin']) && $this->is_admin;
     }
+
+    // public function getFilamentAvatarUrl(): ?string
+    // {
+    //     return $this->profile_photo_url;
+    // }
 }

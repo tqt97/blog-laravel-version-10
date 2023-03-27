@@ -44,8 +44,8 @@ class TagResource extends Resource
                     ->minLength(2)
                     ->maxLength(255)
                     ->required()
-                    ->unique(ignorable: fn ($record) => $record),
-
+                    ->unique(ignorable: fn ($record) => $record)
+                    ->tooltip('Name of tag'),
             ])->columns(1);
     }
 
