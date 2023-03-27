@@ -19,7 +19,7 @@ class StatsOverview extends BaseWidget
             SUM(CASE WHEN active = 0 THEN 1 ELSE 0 END) as inactive
         '))->first();
 
-        return [
+        return $categories->total == 0 ? [] : [
             Card::make(__('Total categories'), $categories->total)
                 ->description(__('Total categories'))
                 ->descriptionIcon('heroicon-s-trending-up')

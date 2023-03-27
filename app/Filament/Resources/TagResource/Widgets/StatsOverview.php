@@ -18,7 +18,7 @@ class StatsOverview extends BaseWidget
             count(*) as total
         '))->first();
 
-        return [
+        return $tags->total == 0 ? [] : [
             Card::make(__('Total'), $tags->total)
                 ->description(__('Total posts'))
                 ->descriptionIcon('heroicon-s-trending-up')

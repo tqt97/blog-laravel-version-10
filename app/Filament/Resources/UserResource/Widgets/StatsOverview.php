@@ -20,7 +20,7 @@ class StatsOverview extends BaseWidget
             SUM(CASE WHEN is_admin = 1 THEN 1 ELSE 0 END) as admin
         '))->first();
 
-        return [
+        return $users->total == 0 ? [] : [
             Card::make(__('Total'), $users->total)
                 ->description(__('Total users'))
                 ->descriptionIcon('heroicon-s-trending-up')
